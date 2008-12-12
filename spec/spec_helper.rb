@@ -3,4 +3,4 @@ require 'spec'
 
 $LOAD_PATH << File.expand_path(File.dirname(__FILE__) + '/../lib')
 
-describe 'object' do;end
+TEST_DATA = File.expand_path(File.dirname(__FILE__) + '/test_data')
