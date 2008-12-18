@@ -50,4 +50,18 @@ describe FlexProject, 'when creating from the test file' do
       @it = FlexProject.from_directory 'place'
     end
   end
+
+  describe 'when extracting compiler directives' do
+    before(:each) do
+      @it = FlexProject.from_directory 'place'
+    end
+
+    it 'should extract valid attributes of the compiler tag as arguments' do
+      @it.compiler_args.should include(:locale => 'en_US')
+    end
+
+    it 'should extract the additional compiler arguments' do
+
+    end
+  end
 end

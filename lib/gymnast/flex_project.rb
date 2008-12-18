@@ -15,24 +15,45 @@ module Gymnast
       alias_method :from_directory, :new
     end
 
-    attr_reader :applications
-    attr_reader :main_app
+    attr_reader :applications, :main_app, :compiler_args
 
     def initialize(dir)
       @applications = []
+      @compiler_args = {}
 
       File.open File.join(dir, '.actionScriptProperties') do |f|
-        config = Hpricot(f.read)
-        root = config.at('/actionscriptproperties')
+        config = Hpricot.XML(f.read)
+        root = config.at('/actionScriptProperties')
 
-        main_app_path = root[:mainapplicationpath]
+        main_app_path = root[:mainApplicationPath]
         (config/:application).each do |el|
           path = el[:path]
 
           @applications << Application.new(path, self)
           @main_app = @applications.last if path == main_app_path
         end
+
+        compiler = root.at(:compiler)
+        @compiler_args.merge! parse_args(compiler[:additionalCompilerArguments])
       end
     end
+
+    private
+      # Parses command-line arguments from a string in command-line form.
+      # Returns a hash of arguments.
+      #
+      # For example, given:
+      #  -locale en_US
+      # Returns:
+      #  { :locale => 'en_US' }
+      def parse_args(str)
+        args = {}
+
+        str.scan(/-(\w+) (\w+)\s*/) do |line|
+          args[line.first.to_sym] = line.last
+        end
+
+        args
+      end
   end
 end
