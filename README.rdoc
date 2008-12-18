@@ -1,0 +1,8 @@
+= Gymnast
+
+Gymnast is a library for reading FlexBuilder *Properties files
+(.actionScriptProperties, .flexProperties) and generating a meaningful Ruby
+class structure from this information.
+
+Eventually the goal is to have some rake and/or capistrano tasks that can take
+advantage of this information.
