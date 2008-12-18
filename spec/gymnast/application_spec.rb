@@ -5,7 +5,6 @@ include Gymnast
 
 describe Application do
   before(:each) do
-    @application = Application.new
+    @application = Application.new 'FiveCylons.mxml', mock(FlexProject)
   end
 end
-

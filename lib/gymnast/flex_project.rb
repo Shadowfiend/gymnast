@@ -29,7 +29,7 @@ module Gymnast
         (config/:application).each do |el|
           path = el[:path]
 
-          @applications << Application.new(path)
+          @applications << Application.new(path, self)
           @main_app = @applications.last if path == main_app_path
         end
       end

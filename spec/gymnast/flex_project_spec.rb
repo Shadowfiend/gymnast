@@ -27,7 +27,7 @@ describe FlexProject, 'when creating from the test file' do
 
   it 'should read the main application as the one named FiveCylons.mxml' do
     app = mock(Application)
-    Application.stub!(:new).with('FiveCylons.mxml').and_return(app)
+    Application.stub!(:new).and_return(app)
 
     @it = FlexProject.from_directory 'place'
 
@@ -43,7 +43,9 @@ describe FlexProject, 'when creating from the test file' do
 
     it 'should pass the application the path to its mxml file' do
       app = mock(Application)
-      Application.should_receive(:new).with('FiveCylons.mxml').and_return(app)
+      Application.should_receive(:new).with('FiveCylons.mxml',
+                                            an_instance_of(FlexProject)).
+                  and_return(app)
 
       @it = FlexProject.from_directory 'place'
     end
